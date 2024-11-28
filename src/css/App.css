@@ -1,0 +1,14 @@
+@import "./character.css";
+@import "./characters.css";
+@import "./comics.css";
+@import "./favorites.css";
+@import "./footer.css";
+@import "./header.css";
+@import "./home.css";
+@import "./login.css";
+@import "./signup.css";
+
+body {
+  background-color: black;
+  color: white;
+}

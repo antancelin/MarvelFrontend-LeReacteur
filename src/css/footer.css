@@ -1,0 +1,19 @@
+* {
+  font-family: sans-serif;
+}
+
+.footer-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px;
+}
+
+.footer-content span {
+  font-weight: 700;
+}
+
+.footer-content a:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
