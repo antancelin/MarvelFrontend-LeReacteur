@@ -4,12 +4,15 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
 
 // Icons
 import { CiSearch } from "react-icons/ci";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 const Characters = () => {
   const navigate = useNavigate();
@@ -19,8 +22,36 @@ const Characters = () => {
   const [name, setName] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [favorites, setFavorites] = useState([]);
+
+  const token = Cookies.get("token");
 
   useEffect(() => {
+    if (token) {
+      // affichage des favoris même après le reload de la page
+      const fetchFavorites = async () => {
+        try {
+          const responseFavorites = await axios.get(
+            `${import.meta.env.VITE_API_URL}/favorites`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const favoritesIds = responseFavorites.data.map((favorite) => {
+            return favorite.body._id;
+          });
+          setFavorites(favoritesIds);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des favoris :", error);
+        }
+      };
+      fetchFavorites();
+    }
+
+    // affichage des personnages
     const fetchData = async () => {
       try {
         let filters = `?page=${page}`;
@@ -38,7 +69,7 @@ const Characters = () => {
       }
     };
     fetchData();
-  }, [name, page]);
+  }, [name, page, token]);
 
   const getPageNumbers = (currentPage, totalPages) => {
     const pageNumbers = [];
@@ -118,12 +149,61 @@ const Characters = () => {
             {data.results.map((character) => {
               return (
                 <React.Fragment key={character._id}>
-                  <div
-                    className="character-card"
-                    onClick={() => {
-                      navigate(`/character/${character._id}`);
-                    }}
-                  >
+                  <div className="character-card">
+                    <div className="character-favorite">
+                      {!favorites.includes(character._id) ? (
+                        <FaRegStar
+                          onClick={async () => {
+                            if (token) {
+                              const newTab = [...favorites];
+                              newTab.push(character._id);
+                              setFavorites(newTab);
+                              try {
+                                await axios.post(
+                                  `${import.meta.env.VITE_API_URL}/favorites`,
+                                  character,
+                                  {
+                                    headers: {
+                                      authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                );
+                              } catch (error) {
+                                console.log(error.response);
+                              }
+                            } else {
+                              navigate("/login");
+                            }
+                          }}
+                        />
+                      ) : (
+                        <FaStar
+                          onClick={async () => {
+                            if (token) {
+                              const newTab = [...favorites];
+                              const i = newTab.indexOf(character._id);
+                              if (i !== -1) {
+                                newTab.splice(i, 1);
+                                setFavorites(newTab);
+                              }
+                              try {
+                                await axios.post(
+                                  `${import.meta.env.VITE_API_URL}/favorites`,
+                                  character,
+                                  {
+                                    headers: {
+                                      authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                );
+                              } catch (error) {
+                                console.log(error.response);
+                              }
+                            }
+                          }}
+                        />
+                      )}
+                    </div>
                     {character.thumbnail.path ===
                       "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ||
                     character.thumbnail.path ===
@@ -139,7 +219,13 @@ const Characters = () => {
                         alt="character-image"
                       />
                     )}
-                    <h2>{character.name}</h2>
+                    <h2
+                      onClick={() => {
+                        navigate(`/character/${character._id}`);
+                      }}
+                    >
+                      {character.name}
+                    </h2>
                     {character.description && <p>{character.description}</p>}
                   </div>
                 </React.Fragment>

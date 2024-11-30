@@ -2,22 +2,54 @@
 
 // Packages
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import Cookies from "js-cookie";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
 
 // Icons
 import { CiSearch } from "react-icons/ci";
+import { FaRegStar } from "react-icons/fa";
+import { FaStar } from "react-icons/fa";
 
 const Comics = () => {
+  const navigate = useNavigate();
+
   const [isLoading, setIsLoading] = useState(true);
   const [data, setData] = useState(null);
   const [title, setTitle] = useState("");
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
+  const [favorites, setFavorites] = useState([]);
+
+  const token = Cookies.get("token");
 
   useEffect(() => {
+    if (token) {
+      const fetchFavorites = async () => {
+        try {
+          const responseFavorites = await axios.get(
+            `${import.meta.env.VITE_API_URL}/favorites`,
+            {
+              headers: {
+                authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          const favoritesIds = responseFavorites.data.map((favorite) => {
+            return favorite.body._id;
+          });
+          setFavorites(favoritesIds);
+        } catch (error) {
+          console.error("Erreur lors de la récupération des favoris :", error);
+        }
+      };
+      fetchFavorites();
+    }
+
     const fetchData = async () => {
       try {
         let filters = `?page=${page}`;
@@ -35,7 +67,7 @@ const Comics = () => {
       }
     };
     fetchData();
-  }, [title, page]);
+  }, [title, page, token]);
 
   const getPageNumbers = (currentPage, totalPages) => {
     const pageNumbers = [];
@@ -116,6 +148,60 @@ const Comics = () => {
               return (
                 <React.Fragment key={comic._id}>
                   <div className="comic-card">
+                    <div className="character-favorite">
+                      {!favorites.includes(comic._id) ? (
+                        <FaRegStar
+                          onClick={async () => {
+                            if (token) {
+                              const newTab = [...favorites];
+                              newTab.push(comic._id);
+                              setFavorites(newTab);
+                              try {
+                                await axios.post(
+                                  `${import.meta.env.VITE_API_URL}/favorites`,
+                                  comic,
+                                  {
+                                    headers: {
+                                      authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                );
+                              } catch (error) {
+                                console.log(error.response);
+                              }
+                            } else {
+                              navigate("/login");
+                            }
+                          }}
+                        />
+                      ) : (
+                        <FaStar
+                          onClick={async () => {
+                            if (token) {
+                              const newTab = [...favorites];
+                              const i = newTab.indexOf(comic._id);
+                              if (i !== -1) {
+                                newTab.splice(i, 1);
+                                setFavorites(newTab);
+                              }
+                              try {
+                                await axios.post(
+                                  `${import.meta.env.VITE_API_URL}/favorites`,
+                                  comic,
+                                  {
+                                    headers: {
+                                      authorization: `Bearer ${token}`,
+                                    },
+                                  }
+                                );
+                              } catch (error) {
+                                console.log(error.response);
+                              }
+                            }
+                          }}
+                        />
+                      )}
+                    </div>
                     {comic.thumbnail.path ===
                       "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ||
                     comic.thumbnail.path ===

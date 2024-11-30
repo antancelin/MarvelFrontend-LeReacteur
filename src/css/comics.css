@@ -97,6 +97,10 @@
   padding: 10px;
 }
 
+.comic-card:hover {
+  cursor: pointer;
+}
+
 .comic-card p {
   overflow: hidden;
 }

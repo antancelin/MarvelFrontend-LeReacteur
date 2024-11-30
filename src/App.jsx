@@ -29,9 +29,15 @@ function App() {
       />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/characters" element={<Characters />} />
+        <Route
+          path="/characters"
+          element={<Characters isAuthenticated={isAuthenticated} />}
+        />
         <Route path="/character/:id" element={<Character />} />
-        <Route path="/comics" element={<Comics />} />
+        <Route
+          path="/comics"
+          element={<Comics isAuthenticated={isAuthenticated} />}
+        />
         <Route path="/favorites" element={<Favorites />} />
         <Route
           path="/signup"

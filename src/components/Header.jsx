@@ -7,7 +7,7 @@ import Cookies from "js-cookie";
 // images
 import marvelLogo from "../assets/imgs/marvel-logo.png";
 
-const Header = ({ isAuthenticated, setIsAuthenticated }) => {
+const Header = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,6 +15,8 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
     setIsAuthenticated(false);
     navigate("/");
   };
+
+  const token = Cookies.get("token");
 
   return (
     <div className="header-container">
@@ -53,7 +55,7 @@ const Header = ({ isAuthenticated, setIsAuthenticated }) => {
           </div>
 
           <div className="session-buttons">
-            {!isAuthenticated ? (
+            {!token ? (
               <>
                 <button
                   onClick={() => {
