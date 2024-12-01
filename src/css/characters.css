@@ -131,6 +131,10 @@
   border-radius: 8px;
 }
 
+.character-card img:hover {
+  opacity: 0.4;
+}
+
 .character-favorite {
   position: absolute;
   top: 10px;
