@@ -115,6 +115,9 @@ const Characters = () => {
         </div>
       ) : (
         <div className="characters-container">
+          <div className="title">
+            <h1>Personnages</h1>
+          </div>
           <div className="characters-top">
             <div className="characters-searchbar">
               <CiSearch className="search-icon" />

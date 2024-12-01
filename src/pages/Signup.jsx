@@ -40,49 +40,51 @@ const Signup = ({ setIsAuthenticated }) => {
   return (
     <>
       <div className="signup-container">
-        <h2>S'inscrire</h2>
-        <form className="signup-form" onSubmit={handleSignup}>
-          <input
-            type="text"
-            placeholder="Nom d'utilisateur"
-            name="username"
-            onChange={(event) => {
-              const newObj = { ...body };
-              newObj.username = event.target.value;
-              setBody(newObj);
+        <div className="signup-content">
+          <h2>S'inscrire</h2>
+          <form className="signup-form" onSubmit={handleSignup}>
+            <input
+              type="text"
+              placeholder="Nom d'utilisateur"
+              name="username"
+              onChange={(event) => {
+                const newObj = { ...body };
+                newObj.username = event.target.value;
+                setBody(newObj);
+              }}
+            />
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              onChange={(event) => {
+                const newObj = { ...body };
+                newObj.email = event.target.value;
+                setBody(newObj);
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Mot de passe"
+              onChange={(event) => {
+                const newObj = { ...body };
+                newObj.password = event.target.value;
+                setBody(newObj);
+              }}
+            />
+            <button>S'inscrire</button>
+            {errorMessage && (
+              <span className="error-message">{errorMessage}</span>
+            )}
+          </form>
+          <a
+            onClick={() => {
+              navigate("/login");
             }}
-          />
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            onChange={(event) => {
-              const newObj = { ...body };
-              newObj.email = event.target.value;
-              setBody(newObj);
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Mot de passe"
-            onChange={(event) => {
-              const newObj = { ...body };
-              newObj.password = event.target.value;
-              setBody(newObj);
-            }}
-          />
-          <button>S'inscrire</button>
-          {errorMessage && (
-            <span className="error-message">{errorMessage}</span>
-          )}
-        </form>
-        <a
-          onClick={() => {
-            navigate("/login");
-          }}
-        >
-          Tu as déjà un compte ? Connecte-toi
-        </a>
+          >
+            Tu as déjà un compte ? Connecte-toi
+          </a>
+        </div>
       </div>
     </>
   );

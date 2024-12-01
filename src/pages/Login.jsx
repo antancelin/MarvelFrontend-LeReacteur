@@ -29,7 +29,7 @@ const Login = ({ setIsAuthenticated }) => {
       navigate(location.state?.from || "/");
     } catch (error) {
       if (error.response.data.message === "wrong email or password") {
-        setErrorMessage("Mauvaise adresse email ou password");
+        setErrorMessage("Mauvaise adresse email ou mot de passe");
       } else {
         setErrorMessage("Une erreur est survenue, veuillez réessayer !");
       }
@@ -38,40 +38,42 @@ const Login = ({ setIsAuthenticated }) => {
 
   return (
     <>
-      <div className="signup-container">
-        <h2>Se connecter</h2>
-        <form className="signup-form" onSubmit={handleLogin}>
-          <input
-            type="email"
-            placeholder="Email"
-            name="email"
-            onChange={(event) => {
-              const newObj = { ...body };
-              newObj.email = event.target.value;
-              setBody(newObj);
+      <div className="login-container">
+        <div className="login-content">
+          <h2>Se connecter</h2>
+          <form className="signup-form" onSubmit={handleLogin}>
+            <input
+              type="email"
+              placeholder="Email"
+              name="email"
+              onChange={(event) => {
+                const newObj = { ...body };
+                newObj.email = event.target.value;
+                setBody(newObj);
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Mot de passe"
+              onChange={(event) => {
+                const newObj = { ...body };
+                newObj.password = event.target.value;
+                setBody(newObj);
+              }}
+            />
+            <button>Se connecter</button>
+            {errorMessage && (
+              <span className="error-message">{errorMessage}</span>
+            )}
+          </form>
+          <a
+            onClick={() => {
+              navigate("/signup");
             }}
-          />
-          <input
-            type="password"
-            placeholder="Mot de passe"
-            onChange={(event) => {
-              const newObj = { ...body };
-              newObj.password = event.target.value;
-              setBody(newObj);
-            }}
-          />
-          <button>Se connecter</button>
-          {errorMessage && (
-            <span className="error-message">{errorMessage}</span>
-          )}
-        </form>
-        <a
-          onClick={() => {
-            navigate("/signup");
-          }}
-        >
-          Pas encore de compte ? Inscris-toi !
-        </a>
+          >
+            Pas encore de compte ? Inscris-toi !
+          </a>
+        </div>
       </div>
     </>
   );

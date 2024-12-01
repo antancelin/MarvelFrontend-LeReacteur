@@ -113,6 +113,9 @@ const Comics = () => {
         </div>
       ) : (
         <div className="comics-container">
+          <div className="title">
+            <h1>Comics</h1>
+          </div>
           <div className="comics-top">
             <div className="comics-searchbar">
               <CiSearch className="search-icon" />
