@@ -1,7 +1,3 @@
-* {
-  font-family: sans-serif;
-}
-
 .comics-container {
   width: 1220px;
   margin: 0 auto;
@@ -18,27 +14,28 @@
 .comics-searchbar svg {
   width: 25px;
   height: 40px;
-  background-color: grey;
-  border: 1px solid grey;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
   border-radius: 5px 0 0 5px;
   padding-left: 5px;
+  backdrop-filter: blur(5px);
 }
 
 .comics-searchbar input {
   width: 70%;
   height: 40px;
-  background-color: grey;
-  border: 1px solid grey;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: none;
   border-radius: 0 5px 5px 0;
   padding: 5px;
-  color: #fff;
+  color: #ffffff;
   font-size: 16px;
+  backdrop-filter: blur(5px);
 }
 
 ::placeholder {
-  color: #fff;
+  color: white;
   font-size: 16px;
-  /* font-weight: 700; */
 }
 
 .comics-pagination {
@@ -77,36 +74,85 @@
 
 .comics-content {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: 30px;
 }
 
 .comic-card {
   height: 450px;
   width: 280px;
-  /* overflow: hidden; */
-  border: solid 1px #ee161e;
-  border-radius: 7px;
-  background-color: #ee161e;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 15px;
-  padding: 10px;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .comic-card:hover {
-  cursor: pointer;
-}
-
-.comic-card p {
-  overflow: hidden;
+  transform: translateY(-10px); /* Légère élévation vers le haut */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .comic-card img {
-  height: 324px;
-  width: 216px;
-  object-fit: contain;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.character-favorite {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  z-index: 2; /* L'étoile reste par-dessus l'image */
+}
+
+.favorite-icon-comic {
+  color: rgb(237, 21, 31);
+  font-size: 28px;
+}
+
+.comic-infos {
+  position: absolute;
+  bottom: 0; /* Placé en bas de la carte */
+  left: 0;
+  right: 0;
+  height: 30%; /* Hauteur de la zone floutée */
+  background-color: rgb(237, 21, 31, 0.3); /* Fond semi-transparent */
+  backdrop-filter: blur(2px); /* Effet de flou uniquement en bas */
+  z-index: 2; /* Au-dessus de l'image */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 5px;
+  border-radius: 8px; /* Arrondi en bas */
+  margin: 5px;
+}
+
+.comic-infos h2,
+.comic-infos p {
+  margin: 0;
+  color: #ffffff;
+  text-align: center;
+}
+
+.comic-infos h2 {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.comic-infos p {
+  font-size: 14px;
+  margin-top: 5px;
+  overflow: scroll;
+}
+
+.comic-infos p::-webkit-scrollbar {
+  display: none; /* Masque la barre de défilement dans Chrome, Edge et Safari */
+}
+
+.favorite-icon-comic:hover {
+  cursor: pointer;
 }

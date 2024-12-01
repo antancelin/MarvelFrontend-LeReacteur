@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
+import marvelGif from "../assets/gifs/marvel-final.gif";
 
 // Icons
 import { FaStar } from "react-icons/fa";
@@ -46,100 +47,122 @@ const Favorites = () => {
   return (
     <>
       {isLoading ? (
-        <p>Chargement en cours...</p>
+        <div className="loading">
+          <div className="gif">
+            <img src={marvelGif} alt="gif-marvel" />
+          </div>
+        </div>
       ) : (
         <div className="favorites-container">
           <div className="favorites-content">
             <div className="favorites-characters">
               <h2>CHARACTERS</h2>
-              {favoritesData.map((favorite) => {
-                return (
-                  <React.Fragment key={favorite._id}>
-                    <div className="favorite-card">
-                      {favorite.type === "character" && (
-                        <>
-                          <FaStar
-                            onClick={async () => {
-                              if (token) {
-                                try {
-                                  const responseDeleted = await axios.post(
-                                    `${import.meta.env.VITE_API_URL}/favorites`,
-                                    favorite.body,
-                                    {
-                                      headers: {
-                                        authorization: `Bearer ${token}`,
-                                      },
-                                    }
-                                  );
+              <div className="favorites-cards">
+                {favoritesData.some(
+                  (favorite) => favorite.type === "character"
+                ) ? (
+                  favoritesData.map((favorite) => {
+                    return (
+                      <React.Fragment key={favorite._id}>
+                        <div className="favorite-card">
+                          {favorite.type === "character" && (
+                            <>
+                              <FaStar
+                                onClick={async () => {
+                                  if (token) {
+                                    try {
+                                      const responseDeleted = await axios.post(
+                                        `${
+                                          import.meta.env.VITE_API_URL
+                                        }/favorites`,
+                                        favorite.body,
+                                        {
+                                          headers: {
+                                            authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      );
 
-                                  if (responseDeleted.status === 200) {
-                                    setFavoritesData((prevData) =>
-                                      prevData.filter(
-                                        (fav) => fav._id !== favorite._id
-                                      )
-                                    );
+                                      if (responseDeleted.status === 200) {
+                                        setFavoritesData((prevData) =>
+                                          prevData.filter(
+                                            (fav) => fav._id !== favorite._id
+                                          )
+                                        );
+                                      }
+                                    } catch (error) {
+                                      console.log(error.response);
+                                    }
                                   }
-                                } catch (error) {
-                                  console.log(error.response);
-                                }
-                              }
-                            }}
-                          />
-                          <div className="favorite-character">
-                            <p>{favorite.body.name}</p>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </React.Fragment>
-                );
-              })}
+                                }}
+                              />
+                              <div className="favorite-character">
+                                <p>{favorite.body.name}</p>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </React.Fragment>
+                    );
+                  })
+                ) : (
+                  <p>Vous n'avez pas de personnages favoris</p>
+                )}
+              </div>
             </div>
 
             <div className="favorites-comics">
               <h2>COMICS</h2>
-              {favoritesData.map((favorite) => {
-                return (
-                  <React.Fragment key={favorite._id}>
-                    <div className="favorite-card">
-                      {favorite.type === "comic" && (
-                        <>
-                          <FaStar
-                            onClick={async () => {
-                              if (token) {
-                                try {
-                                  const responseDeleted = await axios.post(
-                                    `${import.meta.env.VITE_API_URL}/favorites`,
-                                    favorite.body,
-                                    {
-                                      headers: {
-                                        authorization: `Bearer ${token}`,
-                                      },
-                                    }
-                                  );
+              <div className="favorites-cards">
+                {favoritesData.some((favorite) => favorite.type === "comic") ? (
+                  favoritesData.map((favorite) => {
+                    return (
+                      <React.Fragment key={favorite._id}>
+                        <div className="favorite-card">
+                          {favorite.type === "comic" && (
+                            <>
+                              <FaStar
+                                onClick={async () => {
+                                  if (token) {
+                                    try {
+                                      const responseDeleted = await axios.post(
+                                        `${
+                                          import.meta.env.VITE_API_URL
+                                        }/favorites`,
+                                        favorite.body,
+                                        {
+                                          headers: {
+                                            authorization: `Bearer ${token}`,
+                                          },
+                                        }
+                                      );
 
-                                  if (responseDeleted.status === 200) {
-                                    setFavoritesData((prevData) =>
-                                      prevData.filter(
-                                        (fav) => fav._id !== favorite._id
-                                      )
-                                    );
+                                      if (responseDeleted.status === 200) {
+                                        setFavoritesData((prevData) =>
+                                          prevData.filter(
+                                            (fav) => fav._id !== favorite._id
+                                          )
+                                        );
+                                      }
+                                    } catch (error) {
+                                      console.log(error.response);
+                                    }
                                   }
-                                } catch (error) {
-                                  console.log(error.response);
-                                }
-                              }
-                            }}
-                          />
-                          <div className="favorite-comic">
-                            <p>{favorite.body.title}</p>
-                          </div>
-                        </>
-                      )}
-                    </div>
-                  </React.Fragment>
-                );
-              })}
+                                }}
+                              />
+                              <div className="favorite-comic">
+                                <p>{favorite.body.title}</p>
+                              </div>
+                            </>
+                          )}
+                        </div>
+                      </React.Fragment>
+                    );
+                  })
+                ) : (
+                  <p>Vous n'avez pas de comics favoris</p>
+                )}
+              </div>
             </div>
           </div>
         </div>

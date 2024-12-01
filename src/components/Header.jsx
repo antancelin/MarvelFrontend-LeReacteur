@@ -19,72 +19,77 @@ const Header = ({ setIsAuthenticated }) => {
   const token = Cookies.get("token");
 
   return (
-    <div className="header-container">
-      <div className="header-content">
-        <img
-          src={marvelLogo}
-          alt="logo-marvel"
-          className="logo"
-          onClick={() => {
-            navigate("/");
-          }}
-        />
-        <div className="header-buttons">
-          <div className="menu-buttons">
-            <button
-              onClick={() => {
-                navigate("/characters");
-              }}
-            >
-              Characters
-            </button>
-            <button
-              onClick={() => {
-                navigate("/comics");
-              }}
-            >
-              Comics
-            </button>
-            <button
-              onClick={() => {
-                navigate("/favorites");
-              }}
-            >
-              Favorites
-            </button>
-          </div>
-
-          <div className="session-buttons">
-            {!token ? (
-              <>
-                <button
-                  onClick={() => {
-                    navigate("/signup");
-                  }}
-                >
-                  Signup
-                </button>
-                <button
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Login
-                </button>
-              </>
-            ) : (
+    <header>
+      <div className="header-container">
+        <div className="header-content">
+          <img
+            src={marvelLogo}
+            alt="logo-marvel"
+            className="logo"
+            onClick={() => {
+              navigate("/");
+            }}
+          />
+          <div className="header-buttons">
+            <div className="menu-buttons">
               <button
                 onClick={() => {
-                  handleLogout();
+                  navigate("/characters");
                 }}
               >
-                Logout
+                Characters
               </button>
-            )}
+              <button
+                onClick={() => {
+                  navigate("/comics");
+                }}
+              >
+                Comics
+              </button>
+
+              <button
+                onClick={() => {
+                  {
+                    token ? navigate("/favorites") : navigate("/login");
+                  }
+                }}
+              >
+                Favorites
+              </button>
+            </div>
+
+            <div className="session-buttons">
+              {!token ? (
+                <>
+                  <button
+                    onClick={() => {
+                      navigate("/signup");
+                    }}
+                  >
+                    Signup
+                  </button>
+                  <button
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                  >
+                    Login
+                  </button>
+                </>
+              ) : (
+                <button
+                  onClick={() => {
+                    handleLogout();
+                  }}
+                >
+                  Logout
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </header>
   );
 };
 

@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
+import marvelGif from "../assets/gifs/marvel-final.gif";
 
 // Icons
 import { CiSearch } from "react-icons/ci";
@@ -107,7 +108,11 @@ const Characters = () => {
   return (
     <>
       {isLoading ? (
-        <p>Chargement en cours...</p>
+        <div className="loading">
+          <div className="gif">
+            <img src={marvelGif} alt="gif-marvel" />
+          </div>
+        </div>
       ) : (
         <div className="characters-container">
           <div className="characters-top">
@@ -153,6 +158,7 @@ const Characters = () => {
                     <div className="character-favorite">
                       {!favorites.includes(character._id) ? (
                         <FaRegStar
+                          className="favorite-icon"
                           onClick={async () => {
                             if (token) {
                               const newTab = [...favorites];
@@ -178,6 +184,7 @@ const Characters = () => {
                         />
                       ) : (
                         <FaStar
+                          className="favorite-icon"
                           onClick={async () => {
                             if (token) {
                               const newTab = [...favorites];
@@ -213,20 +220,21 @@ const Characters = () => {
                       <img
                         src={
                           character.thumbnail.path +
-                          "/portrait_incredible." +
+                          "." +
                           character.thumbnail.extension
                         }
                         alt="character-image"
                       />
                     )}
-                    <h2
+                    <div
+                      className="character-infos"
                       onClick={() => {
                         navigate(`/character/${character._id}`);
                       }}
                     >
-                      {character.name}
-                    </h2>
-                    {character.description && <p>{character.description}</p>}
+                      <h2>{character.name}</h2>
+                      {character.description && <p>{character.description}</p>}
+                    </div>
                   </div>
                 </React.Fragment>
               );

@@ -8,6 +8,7 @@ import Cookies from "js-cookie";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
+import marvelGif from "../assets/gifs/marvel-final.gif";
 
 // Icons
 import { CiSearch } from "react-icons/ci";
@@ -105,7 +106,11 @@ const Comics = () => {
   return (
     <>
       {isLoading ? (
-        <p>Chargement en cours...</p>
+        <div className="loading">
+          <div className="gif">
+            <img src={marvelGif} alt="gif-marvel" />
+          </div>
+        </div>
       ) : (
         <div className="comics-container">
           <div className="comics-top">
@@ -151,6 +156,7 @@ const Comics = () => {
                     <div className="character-favorite">
                       {!favorites.includes(comic._id) ? (
                         <FaRegStar
+                          className="favorite-icon-comic"
                           onClick={async () => {
                             if (token) {
                               const newTab = [...favorites];
@@ -176,6 +182,7 @@ const Comics = () => {
                         />
                       ) : (
                         <FaStar
+                          className="favorite-icon-comic"
                           onClick={async () => {
                             if (token) {
                               const newTab = [...favorites];
@@ -217,8 +224,10 @@ const Comics = () => {
                         alt="character-image"
                       />
                     )}
-                    <h2>{comic.title}</h2>
-                    <p>{comic.description}</p>
+                    <div className="comic-infos">
+                      <h2>{comic.title}</h2>
+                      {comic.description && <p>{comic.description}</p>}
+                    </div>
                   </div>
                 </React.Fragment>
               );

@@ -2,6 +2,10 @@
   font-family: sans-serif;
 }
 
+header {
+  background-color: #ee161e;
+}
+
 .header-container {
   width: 1220px;
   margin: 0 auto;
@@ -31,10 +35,25 @@
 
 .header-content img {
   width: 300px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-img:hover {
+.header-content button {
+  background-color: #ee161e;
+  border: none;
+  color: #fff;
+  font-size: 20px;
+  font-style: italic;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.header-content button:hover {
+  transform: translateY(-10px);
+}
+
+.header-container img:hover {
   cursor: pointer;
+  transform: translateY(-10px);
 }
 
 button:hover {

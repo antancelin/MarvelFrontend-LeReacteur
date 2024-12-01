@@ -8,6 +8,7 @@ import axios from "axios";
 
 // images
 import deadpoolSorry from "../assets/imgs/deadpool-sorry.png";
+import marvelGif from "../assets/gifs/marvel-final.gif";
 
 const Character = () => {
   const { id } = useParams();
@@ -44,14 +45,20 @@ const Character = () => {
   return (
     <>
       {isLoading ? (
-        <p>En cours de chargement...</p>
+        <div className="loading">
+          <div className="gif">
+            <img src={marvelGif} alt="gif-marvel" />
+          </div>
+        </div>
       ) : (
         <>
           <div className="character-container">
             <div className="character-content">
               <div className="character-card">
                 {characterData.thumbnail.path ===
-                "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ? (
+                  "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ||
+                characterData.thumbnail.path ===
+                  "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708" ? (
                   <img src={deadpoolSorry} alt="deadpool-sorry" />
                 ) : (
                   <img
@@ -63,24 +70,38 @@ const Character = () => {
                     alt="character-image"
                   />
                 )}
-                <h2>{characterData.name}</h2>
-                <p>{characterData.description}</p>
+                <div className="character-infos">
+                  <h2>{characterData.name}</h2>
+                  {characterData.description && (
+                    <p>{characterData.description}</p>
+                  )}
+                </div>
               </div>
+              <p>À retrouver ici ⬇️</p>
               <div className="comics-list">
                 {comicsData.comics.map((comic) => {
                   return (
                     <React.Fragment key={comicsData._id}>
-                      <div className="comic-content">
-                        <img
-                          src={
-                            comic.thumbnail.path +
-                            "." +
-                            comic.thumbnail.extension
-                          }
-                          alt="comic-cover"
-                        />
-                        <h2>{comic.title}</h2>
-                        <p>{comic.description}</p>
+                      <div className="comic-card">
+                        {comic.thumbnail.path ===
+                          "http://i.annihil.us/u/prod/marvel/i/mg/b/40/image_not_available" ||
+                        comic.thumbnail.path ===
+                          "http://i.annihil.us/u/prod/marvel/i/mg/f/60/4c002e0305708" ? (
+                          <img src={deadpoolSorry} alt="deadpool-sorry" />
+                        ) : (
+                          <img
+                            src={
+                              comic.thumbnail.path +
+                              "." +
+                              comic.thumbnail.extension
+                            }
+                            alt="comic-image"
+                          />
+                        )}
+                        <div className="comic-infos">
+                          <h2>{comic.title}</h2>
+                          {comic.description && <p>{comic.description}</p>}
+                        </div>
                       </div>
                     </React.Fragment>
                   );
