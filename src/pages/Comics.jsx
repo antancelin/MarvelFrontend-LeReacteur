@@ -72,7 +72,7 @@ const Comics = () => {
 
   const getPageNumbers = (currentPage, totalPages) => {
     const pageNumbers = [];
-    const delta = 2; // Nombre de pages à afficher autour de la page active
+    const delta = 2;
 
     for (let i = 1; i <= totalPages; i++) {
       if (

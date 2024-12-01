@@ -120,8 +120,8 @@
 }
 
 .character-card:hover {
-  transform: translateY(-10px); /* Légère élévation vers le haut */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Accentuation de l'ombre */
+  transform: translateY(-10px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
 .character-card img {
@@ -139,7 +139,7 @@
   position: absolute;
   top: 10px;
   right: 10px;
-  z-index: 2; /* L'étoile reste par-dessus l'image */
+  z-index: 2;
 }
 
 .favorite-icon {
@@ -149,19 +149,19 @@
 
 .character-infos {
   position: absolute;
-  bottom: 0; /* Placé en bas de la carte */
+  bottom: 0;
   left: 0;
   right: 0;
-  height: 30%; /* Hauteur de la zone floutée */
-  background-color: rgb(237, 21, 31, 0.3); /* Fond semi-transparent */
-  backdrop-filter: blur(2px); /* Effet de flou uniquement en bas */
-  z-index: 2; /* Au-dessus de l'image */
+  height: 30%;
+  background-color: rgb(237, 21, 31, 0.3);
+  backdrop-filter: blur(2px);
+  z-index: 2;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   padding: 5px;
-  border-radius: 8px; /* Arrondi en bas */
+  border-radius: 8px;
   margin: 5px;
 }
 
@@ -184,7 +184,7 @@
 }
 
 .character-infos p::-webkit-scrollbar {
-  display: none; /* Masque la barre de défilement dans Chrome, Edge et Safari */
+  display: none;
 }
 
 .favorite-icon:hover,

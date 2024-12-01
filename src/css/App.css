@@ -9,7 +9,7 @@
 @import "./signup.css";
 
 * {
-  font-family: sans-serif !important;
+  font-family: Roboto, sans-serif !important;
 }
 
 body {
